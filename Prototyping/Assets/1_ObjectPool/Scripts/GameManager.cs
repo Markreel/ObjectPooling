@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public System.Action OnUpdate;
+    public System.Action OnFixedUpdate;
+
     public TimerHandler TimerHandler;
     public AudioManager AudioManager;
     public RewindManager RewindManager;
-
-    public System.Action OnUpdate;
-    public System.Action OnFixedUpdate;
 
     private ObjectPool objectPool;
     private TrafficManager trafficManager;
@@ -29,22 +27,19 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.OnStart(objectPool);
-        objectPool.OnStart(this);
-        trafficManager.OnStart(objectPool, TimerHandler);
+        AudioManager?.OnStart(objectPool);
+        objectPool?.OnStart();
+        trafficManager?.OnStart(objectPool, TimerHandler);
 
         OnUpdate += TimerHandler.OnUpdate;
         OnUpdate += trafficManager.OnUpdate;
+        OnUpdate += RewindManager.OnUpdate;
+
         OnFixedUpdate += RewindManager.OnFixedUpdate;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { Time.timeScale += (Time.timeScale > 1 ? 1 : 0.1f); }
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {Time.timeScale -= (Time.timeScale > 1 ? 1 : 0.1f); }
-        if (Input.GetKeyDown(KeyCode.Space)) { Time.timeScale = 1; }
-        if (Input.GetKeyDown(KeyCode.R)) { RewindManager.StartRewinding(); }
-
         OnUpdate?.Invoke();
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AC_RandomClip : AudioComponent
 {
+
     public override void Play()
     {
         audioSource.clip = clipCollections[0].AudioClips[Random.Range(0, clipCollections[0].AudioClips.Count)];

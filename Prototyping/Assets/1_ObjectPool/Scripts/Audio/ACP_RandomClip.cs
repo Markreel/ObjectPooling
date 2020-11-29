@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class ACP_RandomClip : AC_RandomClip, IPooledObject
 {
+    public ObjectPool ObjectPool { get; set; }
     public string Key { get; set; }
 
-    public System.Action<string, GameObject> OnDestruction;
+    protected override void Disable()
+    {
+        ObjectPool.DespawnFromPool(Key, gameObject);
+    }
 
     public void OnObjectDespawn()
     {
@@ -16,10 +20,5 @@ public class ACP_RandomClip : AC_RandomClip, IPooledObject
     public void OnObjectSpawn()
     {
         
-    }
-
-    public void SetUpOnDestruction(System.Action<string, GameObject> _action)
-    {
-        OnDestruction += _action;
     }
 }

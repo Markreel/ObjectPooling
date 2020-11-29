@@ -44,7 +44,7 @@ public class AudioComponent : MonoBehaviour
         randomPitchValue = Random.Range(randomPitchMin, randomPitchMax);
     }
 
-    protected void Disable()
+    protected virtual void Disable()
     {
         gameObject.SetActive(false);
     }
@@ -99,7 +99,7 @@ public class AudioComponent : MonoBehaviour
         clipCollections.Add(_acc);
     }
 
-    public virtual void Reset()
+    public virtual void ResetValues()
     {
         DisableAfterPlaying = false;
         playOnEnable = false;

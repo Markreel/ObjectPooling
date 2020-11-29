@@ -30,6 +30,14 @@ public class RewindManager : MonoBehaviour
         OnResetRecording.Invoke();
     }
 
+    public void OnUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { Time.timeScale += (Time.timeScale < 1 ? 0.1f : 1); }
+        if (Input.GetKeyDown(KeyCode.DownArrow)) { Time.timeScale -= (Time.timeScale > 1 ? 1 : 0.1f); }
+        if (Input.GetKeyDown(KeyCode.Space)) { Time.timeScale = 1; }
+        if (Input.GetKeyDown(KeyCode.R)) { StartRewinding(); }
+    }
+
     public void OnFixedUpdate()
     {
         if (IsRewinding) { Rewind(); }

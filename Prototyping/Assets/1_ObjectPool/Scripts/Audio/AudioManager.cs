@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
         PooledObject _po = objectPool.SpawnFromPool("AC_RandomClip", _t.position, _t.eulerAngles);
         AudioComponent _ac = _po.GameObject.GetComponent<AudioComponent>();
 
-        _ac.Reset();
+        _ac.ResetValues();
         _ac.DisableAfterPlaying = true;
         _ac.AddAudioClipCollection("", _clips);
         _ac.Play();

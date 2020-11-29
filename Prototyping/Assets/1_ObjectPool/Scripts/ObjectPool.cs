@@ -27,9 +27,8 @@ public class PooledObject
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private List<Pool> pools;
-    private Dictionary<string, List<PooledObject>> poolDictionary;
 
-    private GameManager gameManager;
+    private Dictionary<string, List<PooledObject>> poolDictionary;
 
     private void ExpandPool(Pool _pool)
     {
@@ -46,7 +45,7 @@ public class ObjectPool : MonoBehaviour
                 if (_ipo != null)
                 {
                     _ipo.Key = _pool.Key;
-                    _ipo.SetUpOnDestruction(DespawnFromPool);
+                    _ipo.ObjectPool = this;
                 }
 
                 //Create a PooledObject from the GameObject and the IPooledObject interface
@@ -61,11 +60,8 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public void OnStart(GameManager _gm)
+    public void OnStart()
     {
-        //Save the GameManager
-        gameManager = _gm;
-
         //Create a new dictionary of PooledObject queues
         poolDictionary = new Dictionary<string, List<PooledObject>>();
 
@@ -85,7 +81,7 @@ public class ObjectPool : MonoBehaviour
                 if (_ipo != null)
                 {
                     _ipo.Key = _pool.Key;
-                    _ipo.SetUpOnDestruction(DespawnFromPool);
+                    _ipo.ObjectPool = this;
                 }
 
                 //Create a PooledObject from the GameObject and the IPooledObject interface

@@ -5,8 +5,9 @@ using System;
 
 public interface IPooledObject
 {
+    ObjectPool ObjectPool { get; set;}
     string Key { get; set; }
+
     void OnObjectSpawn();
     void OnObjectDespawn();
-    void SetUpOnDestruction(Action<string, GameObject> _action);
 }

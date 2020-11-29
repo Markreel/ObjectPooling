@@ -5,8 +5,12 @@ using UnityEngine;
 public class ACP_SingleClip : AC_SingleClip, IPooledObject
 {
     public string Key { get; set; }
-    public System.Action<string, GameObject> OnDestruction;
+    public ObjectPool ObjectPool { get; set; }
 
+    protected override void Disable()
+    {
+        ObjectPool.DespawnFromPool(Key, gameObject);
+    }
 
     public void OnObjectDespawn()
     {
@@ -18,8 +22,4 @@ public class ACP_SingleClip : AC_SingleClip, IPooledObject
         
     }
 
-    public void SetUpOnDestruction(System.Action<string, GameObject> _action)
-    {
-        OnDestruction += _action;
-    }
 }
